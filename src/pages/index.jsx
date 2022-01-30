@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import { connectEthereum } from "../ethereum";
 import styled from "styled-components";
+import Panel from "../components/Panel";
 
 export const Container = styled.div`
   width: 100vw;
@@ -36,6 +37,10 @@ export const Main = styled.div`
   font-family: monospace, Impact, Haettenschweiler, "Arial Narrow Bold",
     sans-serif;
   color: white;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 
 export default function Home() {
@@ -67,7 +72,9 @@ export default function Home() {
         <div>Balance: {info.balance} | </div>
         <div>NetId: {info.netId}</div>
       </Header>
-      <Main>qwejwiq</Main>
+      <Main>
+        <Panel></Panel>
+      </Main>
     </Container>
   );
 }
