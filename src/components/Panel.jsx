@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -30,9 +30,13 @@ export const Container = styled.div`
   }
 `;
 
-const Panel = () => {
+const Panel = ({ contract }) => {
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
+
+  useEffect(() => {
+    console.log(contract);
+  }, [contract]);
 
   const handlerDeposit = (e) => {
     setFirstValue(e.target.value);
@@ -47,6 +51,13 @@ const Panel = () => {
 
     if (firstValue && secondValue) {
       alert("error");
+      return;
+    }
+
+    if (!parseInt(firstValue) && !parseInt(secondValue)) {
+      console.log(`Only number are allowed!`);
+      setFirstValue("");
+      setSecondValue("");
       return;
     }
 

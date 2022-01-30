@@ -73,7 +73,7 @@ export default function Home() {
         <div>NetId: {info.netId}</div>
       </Header>
       <Main>
-        <Panel></Panel>
+        <Panel contract={info.contract}></Panel>
       </Main>
     </Container>
   );
