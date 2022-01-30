@@ -48,18 +48,25 @@ export default function Home() {
 
   useEffect(() => {
     const done = async () => {
-      const [account, netId, contract, balance, balanceWeth] =
-        await connectEthereum();
-      setInfo((info) => ({
-        ...info,
-        account: account,
-        balance: parseInt(balance),
-        contract: contract,
-        netId: netId,
-        balanceWeth: parseInt(balanceWeth),
-      }));
+      try {
+        const [account, netId, contract, balance, balanceWeth] =
+          await connectEthereum();
+        setInfo((info) => ({
+          ...info,
+          account: account,
+          balance: parseInt(balance),
+          contract: contract,
+          netId: netId,
+          balanceWeth: parseInt(balanceWeth),
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+      //
     };
+
     done();
+    //
   }, []);
 
   return (

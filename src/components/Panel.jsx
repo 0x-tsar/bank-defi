@@ -64,9 +64,9 @@ const Panel = ({ info }) => {
 
     if (firstValue) {
       //deposit
-      console.log(`deposit ${firstValue}`);
+      // console.log(`deposit ${firstValue}`);
 
-      const weiValue = firstValue;
+      // const weiValue = firstValue;
       // const ethValue = ethers.utils.formatEther(weiValue);
 
       // console.log(ethValue);
@@ -79,11 +79,47 @@ const Panel = ({ info }) => {
 
       // const balanceOf = await info.contract.balanceOf(info.account);
 
-      const tx = await info.contract.deposit({
-        from: info.account,
-        value: weiValue,
-      });
+      const value = ethers.utils.parseEther("0.00000000001");
+      // console.log(value.toString());
+
+      console.log(info.account);
+      console.log(info.contract);
+      console.log(value.toString());
+
+      const tx = await info.contract.deposit({ value: value.toString() });
       console.log(tx);
+
+      // const transaction = await info.contract.test2({
+      //   value: ethers.utils.parseEther("0.1"),
+      // });
+      //sends 0.1 eth
+      // await transaction.wait();
+
+      // await info.contract.test2({
+      //   from: info.account,
+      //   value: value.toString(),
+      // });
+
+      // let overrides = {
+      //   // To convert Ether to Wei:
+      //   value: ethers.utils.parseEther("1.0"), // ether in this case MUST be a string
+      // };
+
+      // Pass in the overrides as the 3rd parameter to your 2-parameter function:
+      // let tx = await info.contract.test2({from:});
+      // console.log(tx);
+
+      // try {
+      //   const tx = await info.contract.deposit({
+      //     from: info.account,
+      //     value: "1000000",
+      //   });
+      //   console.log(tx);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      //
     }
 
     if (secondValue) {
