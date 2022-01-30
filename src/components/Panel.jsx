@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ethers } from "ethers";
 
 export const Container = styled.div`
   width: 350px;
@@ -30,13 +31,13 @@ export const Container = styled.div`
   }
 `;
 
-const Panel = ({ contract }) => {
+const Panel = ({ info }) => {
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
 
   useEffect(() => {
-    console.log(contract);
-  }, [contract]);
+    console.log(info);
+  }, [info]);
 
   const handlerDeposit = (e) => {
     setFirstValue(e.target.value);
@@ -46,7 +47,7 @@ const Panel = ({ contract }) => {
     setSecondValue(e.target.value);
   };
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = async (e) => {
     e.preventDefault();
 
     if (firstValue && secondValue) {
@@ -64,6 +65,25 @@ const Panel = ({ contract }) => {
     if (firstValue) {
       //deposit
       console.log(`deposit ${firstValue}`);
+
+      const weiValue = firstValue;
+      // const ethValue = ethers.utils.formatEther(weiValue);
+
+      // console.log(ethValue);
+      // console.log(typeof ethValue);
+      // console.log(weiValue);
+      // console.log(typeof weiValue);
+
+      // console.log(info.account);
+      // console.log(info.contract);
+
+      // const balanceOf = await info.contract.balanceOf(info.account);
+
+      const tx = await info.contract.deposit({
+        from: info.account,
+        value: weiValue,
+      });
+      console.log(tx);
     }
 
     if (secondValue) {
@@ -82,6 +102,7 @@ const Panel = ({ contract }) => {
         <input
           type="text"
           value={firstValue}
+          placeholder="in Weis"
           onChange={(e) => handlerDeposit(e)}
         />
         <br />
@@ -90,6 +111,7 @@ const Panel = ({ contract }) => {
         <input
           type="text"
           value={secondValue}
+          placeholder="in Weis"
           onChange={(e) => handlerWithdraw(e)}
         />
         <br />

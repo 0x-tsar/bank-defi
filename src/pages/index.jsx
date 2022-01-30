@@ -48,13 +48,15 @@ export default function Home() {
 
   useEffect(() => {
     const done = async () => {
-      const [account, netId, contract, balance] = await connectEthereum();
+      const [account, netId, contract, balance, balanceWeth] =
+        await connectEthereum();
       setInfo((info) => ({
         ...info,
         account: account,
         balance: parseInt(balance),
         contract: contract,
         netId: netId,
+        balanceWeth: parseInt(balanceWeth),
       }));
     };
     done();
@@ -70,10 +72,11 @@ export default function Home() {
       <Header>
         <div>Address: {info.account} | </div>
         <div>Balance: {info.balance} | </div>
+        <div>Balance WETH: {info.balanceWeth} | </div>
         <div>NetId: {info.netId}</div>
       </Header>
       <Main>
-        <Panel contract={info.contract}></Panel>
+        <Panel info={info}></Panel>
       </Main>
     </Container>
   );
