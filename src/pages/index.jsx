@@ -1,8 +1,18 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
+import { connectEthereum } from "../ethereum";
 
 export default function Home() {
+  //
+  useEffect(() => {
+    const done = async () => {
+      const [account, netId] = await connectEthereum();
+    };
+    done();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
