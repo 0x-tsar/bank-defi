@@ -138,7 +138,7 @@ const Panel = ({ info, type }) => {
         </form>
       ) : (
         <div>
-          <h3>Total Borrowed ETH</h3>
+          <h3>Total ETH Lended</h3>
           <h3 style={{ textAlign: "center" }}>{totalSupply}</h3>
         </div>
       )}
