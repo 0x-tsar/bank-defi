@@ -5,6 +5,7 @@ import styles from "../../styles/Home.module.css";
 import { connectEthereum } from "../ethereum";
 import styled from "styled-components";
 import Panel from "../components/Panel";
+import { ethers } from "ethers";
 
 export const Container = styled.div`
   width: 100vw;
@@ -51,6 +52,8 @@ export default function Home() {
       try {
         const [account, netId, contract, balance, balanceWeth] =
           await connectEthereum();
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
         setInfo((info) => ({
           ...info,
           account: account,
@@ -59,6 +62,32 @@ export default function Home() {
           netId: netId,
           balanceWeth: parseInt(balanceWeth),
         }));
+
+        contract.once("evDeposit", async () => {
+          // do something
+          const balance = await provider.getBalance(account);
+          const balanceWeth = await contract.balanceOf(account);
+          // window.location.reload()
+          setInfo((info) => ({
+            ...info,
+            balance: parseInt(balance),
+            balanceWeth: parseInt(balanceWeth),
+          }));
+        });
+
+        contract.once("evWithdraw", async () => {
+          // do something
+          const balance = await provider.getBalance(account);
+          const balanceWeth = await contract.balanceOf(account);
+          // window.location.reload()
+          setInfo((info) => ({
+            ...info,
+            balance: parseInt(balance),
+            balanceWeth: parseInt(balanceWeth),
+          }));
+        });
+
+        //
       } catch (error) {
         console.error(error);
       }

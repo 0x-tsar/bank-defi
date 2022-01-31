@@ -38,15 +38,5 @@ export async function connectEthereum() {
   const balance = await provider.getBalance(account);
   const balanceWeth = await contract.balanceOf(account);
 
-  contract.once("evDeposit", () => {
-    // do something
-    // window.location.reload()
-  });
-
-  contract.once("evWithdraw", () => {
-    // do something
-    // window.location.reload()
-  });
-
   return [account, netId, contract, balance, balanceWeth];
 }
