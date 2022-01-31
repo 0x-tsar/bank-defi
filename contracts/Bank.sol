@@ -9,10 +9,6 @@ contract Bank is ERC20 {
     event evDeposit(address, uint256);
     event evWithdraw(address, uint256);
 
-    function test() external pure returns (string memory) {
-        return "TESTING!!!";
-    }
-
     function deposit() external payable {
         // payable(address(this)).transfer(msg.value);
         _mint(msg.sender, msg.value);
@@ -27,5 +23,9 @@ contract Bank is ERC20 {
         _burn(msg.sender, _amount);
         payable(msg.sender).transfer(_amount);
         emit evWithdraw(msg.sender, _amount);
+    }
+
+    function tSupply() public view returns (uint256) {
+        return totalSupply();
     }
 }

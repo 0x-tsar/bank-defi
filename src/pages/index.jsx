@@ -83,7 +83,8 @@ export default function Home() {
         <div>NetId: {info.netId}</div>
       </Header>
       <Main>
-        <Panel info={info}></Panel>
+        <Panel info={info} type={1}></Panel>
+        <Panel info={info} type={2}></Panel>
       </Main>
     </Container>
   );

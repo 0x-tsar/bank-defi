@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ethers } from "ethers";
+import React, { useEffect, useState } from "react";
+import { isEmpty } from "lodash";
 
 export const Container = styled.div`
   width: 350px;
@@ -31,12 +32,33 @@ export const Container = styled.div`
   }
 `;
 
-const Panel = ({ info }) => {
+const Panel = ({ info, type }) => {
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
+  const [isForm, setIsForm] = useState(true);
+  const [totalSupply, setTotalSupply] = useState(0);
 
   useEffect(() => {
-    console.log(info);
+    //
+    if (type === 1) {
+      setIsForm(true);
+    } else {
+      setIsForm(false);
+    }
+
+    if (!info) {
+      setIsForm(false);
+    } else {
+      const done = async () => {
+        if (!isEmpty(info)) {
+          console.log(info);
+          const ts = await info.contract.totalSupply();
+          setTotalSupply(parseInt(ts));
+        }
+      };
+
+      done();
+    }
   }, [info]);
 
   const handlerDeposit = (e) => {
@@ -79,6 +101,12 @@ const Panel = ({ info }) => {
     if (secondValue) {
       //withdraw
       console.log(`withdraw ${secondValue}`);
+
+      let value = ethers.utils.parseUnits(secondValue.toString(), "wei");
+      value = value.toString();
+
+      const tx = await info.contract.withdraw(value);
+      console.log(tx);
     }
 
     setFirstValue("");
@@ -87,26 +115,33 @@ const Panel = ({ info }) => {
 
   return (
     <Container>
-      <form onSubmit={handlerSubmit}>
-        <h3>DEPOSIT</h3>
-        <input
-          type="text"
-          value={firstValue}
-          placeholder="in Weis"
-          onChange={(e) => handlerDeposit(e)}
-        />
-        <br />
-        <button>Deposit</button>
-        <h3>WITHDRAW</h3>
-        <input
-          type="text"
-          value={secondValue}
-          placeholder="in Weis"
-          onChange={(e) => handlerWithdraw(e)}
-        />
-        <br />
-        <button>Withdraw</button>
-      </form>
+      {isForm ? (
+        <form onSubmit={handlerSubmit}>
+          <h3>DEPOSIT</h3>
+          <input
+            type="text"
+            value={firstValue}
+            placeholder="in Weis"
+            onChange={(e) => handlerDeposit(e)}
+          />
+          <br />
+          <button>Deposit</button>
+          <h3>WITHDRAW</h3>
+          <input
+            type="text"
+            value={secondValue}
+            placeholder="in Weis"
+            onChange={(e) => handlerWithdraw(e)}
+          />
+          <br />
+          <button>Withdraw</button>
+        </form>
+      ) : (
+        <div>
+          <h3>Total Borrowed ETH</h3>
+          <h3 style={{ textAlign: "center" }}>{totalSupply}</h3>
+        </div>
+      )}
     </Container>
   );
 };
