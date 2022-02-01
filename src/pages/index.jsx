@@ -99,6 +99,7 @@ export default function Home() {
         //
       } catch (error) {
         console.error(error);
+        setVisible(false);
       }
       //
     };
@@ -139,7 +140,8 @@ export default function Home() {
             fontSize: "30px",
           }}
         >
-          Please, enable Metamask with the Mumbai network 🌱✌️
+          Please, enable Metamask with the Mumbai network and refresh the
+          page🌱✌️
         </div>
       )}
     </Container>

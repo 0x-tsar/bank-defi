@@ -51,7 +51,7 @@ const Panel = ({ info, type }) => {
     } else {
       const done = async () => {
         if (!isEmpty(info)) {
-          console.log(info);
+          // console.log(info);
           const ts = await info.contract.totalSupply();
           setTotalSupply(parseInt(ts));
         }
@@ -78,7 +78,7 @@ const Panel = ({ info, type }) => {
     }
 
     if (!parseInt(firstValue) && !parseInt(secondValue)) {
-      console.log(`Only number are allowed!`);
+      // console.log(`Only number are allowed!`);
       setFirstValue("");
       setSecondValue("");
       return;
@@ -95,18 +95,18 @@ const Panel = ({ info, type }) => {
       value = value.toString();
 
       const tx = await info.contract.deposit({ value: value });
-      console.log(tx);
+      // console.log(tx);
     }
 
     if (secondValue) {
       //withdraw
-      console.log(`withdraw ${secondValue}`);
+      // console.log(`withdraw ${secondValue}`);
 
       let value = ethers.utils.parseUnits(secondValue.toString(), "wei");
       value = value.toString();
 
       const tx = await info.contract.withdraw(value);
-      console.log(tx);
+      // console.log(tx);
     }
 
     setFirstValue("");
@@ -139,7 +139,7 @@ const Panel = ({ info, type }) => {
       ) : (
         <div>
           <h3>Total ETH Lended</h3>
-          <h3 style={{ textAlign: "center" }}>{totalSupply}</h3>
+          <h3 style={{ textAlign: "center" }}>{totalSupply} Weis</h3>
         </div>
       )}
     </Container>
