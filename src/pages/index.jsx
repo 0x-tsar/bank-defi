@@ -46,9 +46,18 @@ export const Main = styled.div`
 
 export default function Home() {
   const [info, setInfo] = useState({});
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const done = async () => {
+      if (!window.ethereum) {
+        setVisible(false);
+        // alert("PLEASE, ENABLE METAMASK!");
+        // add modal
+        return;
+      } else {
+        setVisible(true);
+      }
       try {
         const [account, netId, contract, balance, balanceWeth] =
           await connectEthereum();
@@ -111,10 +120,28 @@ export default function Home() {
         <div>Balance WETH: {info.balanceWeth} | </div>
         <div>NetId: {info.netId}</div>
       </Header>
-      <Main>
-        <Panel info={info} type={1}></Panel>
-        <Panel info={info} type={2}></Panel>
-      </Main>
+      {visible ? (
+        <Main>
+          <Panel info={info} type={1}></Panel>
+          <Panel info={info} type={2}></Panel>
+        </Main>
+      ) : (
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "black",
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontFamily: "monospace",
+            fontSize: "30px",
+          }}
+        >
+          Please, enable Metamask with the Mumbai network 🌱✌️
+        </div>
+      )}
     </Container>
   );
 }
