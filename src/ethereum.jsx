@@ -11,6 +11,10 @@ export async function connectEthereum() {
 
   window.ethereum.enable();
 
+  ethereum.on("connect", (e) => {
+    window.location.reload();
+  });
+
   if (!account) {
     return;
   }
