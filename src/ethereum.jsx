@@ -7,9 +7,11 @@ export async function connectEthereum() {
   });
   const netId = await window.ethereum.request({ method: "net_version" });
 
-  console.log(account);
+  const accounts = await window.ethereum.request({
+    method: "eth_requestAccounts",
+  });
 
-  window.ethereum.enable();
+  // window.ethereum.enable();
 
   ethereum.on("connect", (e) => {
     window.location.reload();
