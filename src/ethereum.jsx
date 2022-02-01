@@ -2,12 +2,18 @@ import { ethers } from "ethers";
 import Bank from "./build/Bank";
 
 export async function connectEthereum() {
-  const [account] = await window.ethereum.request({ method: "eth_accounts" });
+  const [account, _] = await window.ethereum.request({
+    method: "eth_accounts",
+  });
   const netId = await window.ethereum.request({ method: "net_version" });
 
-  // if (!account) {
-  //   return;
-  // }
+  console.log(account);
+
+  window.ethereum.enable();
+
+  if (!account) {
+    return;
+  }
 
   if (typeof window.ethereum === "undefined") {
     alert("Metamask not installed");
